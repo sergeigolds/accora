@@ -38,20 +38,35 @@
                         </a>
                     <li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('ad') }}">
+                        <a class="nav-link" href="{{ route('single') }}">
                             Single
                         </a>
                     <li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('test') }}">
+                            Test
+                        </a>
+                    <li>
                 </ul>
-                <div class="post-btn">
-                    <a class="btn btn-common" href="{{ route('login') }}"><i class="lni-pencil-alt"></i> Log In</a>
-                </div>
-                <div class="post-btn">
-                    <a class="btn btn-common" href="{{ route('register') }}"><i class="lni-pencil-alt"></i> Register</a>
-                </div>
-                <div class="post-btn">
-                    <a class="btn btn-common" href="{{ route('post-ad') }}"><i class="lni-pencil-alt"></i> Post an Ad</a>
-                </div>
+                @auth
+                    <div class="post-btn">
+                        <a class="btn btn-common" href="{{ route('post-ad') }}"><i class="lni-pencil-alt"></i> Post an
+                            Ad</a>
+                    </div>
+                    <div class="post-btn">
+                        <a class="btn btn-common" href="{{ route('account') }}"><i class="lni-pencil-alt"></i> My
+                            Account</a>
+                    </div>
+                @endauth
+
+                @guest
+                    <div class="post-btn">
+                        <a class="btn btn-common" href="{{ route('login') }}"><i class="lni-pencil-alt"></i> Log In</a>
+                    </div>
+                    <div class="post-btn">
+                        <a class="btn btn-common" href="{{ route('register') }}"><i class="lni-pencil-alt"></i> Register</a>
+                    </div>
+                @endguest
             </div>
         </div>
 
@@ -220,7 +235,6 @@
 <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
-<script src="{{ asset('js/form-validator.min.js') }}"></script>
 <script src="{{ asset('js/summernote.js') }}"></script>
 
 </body>

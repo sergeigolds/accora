@@ -1,3 +1,26 @@
 .fixed-top {
     top: 0;
 }
+
+.form-control:focus {
+    border-color: #e5e5e5;
+}
+
+input.not-validated {
+    border-color: #e91e63;
+    outline: 0;
+    box-shadow: none;
+}
+
+.error-message {
+    color: #e91e63;
+}
+
+input::placeholder {
+    color: #ccc!important;
+}
+
+
+.login-error {
+    margin-bottom: 15px;
+}
