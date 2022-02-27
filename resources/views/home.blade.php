@@ -34,7 +34,7 @@
                                     <div class="form-group inputwithicon">
                                         <div class="select">
                                             <select>
-                                                <option value="none">Select Catagory</option>
+                                                <option value="none">Select Category</option>
                                                 <option value="none">Jobs</option>
                                                 <option value="none">Electronics</option>
                                                 <option value="none">Mobile</option>

@@ -6,7 +6,7 @@
     border-color: #e5e5e5;
 }
 
-input.not-validated {
+.not-validated {
     border-color: #e91e63;
     outline: 0;
     box-shadow: none;
@@ -16,8 +16,13 @@ input.not-validated {
     color: #e91e63;
 }
 
+textarea::placeholder,
 input::placeholder {
     color: #ccc!important;
+}
+
+input#image_name {
+    display: none;
 }
 
 

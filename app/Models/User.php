@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
+    }
+
 }

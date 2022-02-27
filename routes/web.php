@@ -7,11 +7,6 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/test', function () {
-    return view('test');
-})->name('test');
-
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -31,7 +26,5 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
 // Only auth users
 Route::get('/account', [AccountController::class, 'index'])->name('account');
-
-Route::get('/account/post-ad', function () {
-    return view('account.post-ad');
-})->name('post-ad');
+Route::get('/account/post-ad', [AdController::class, 'showAdForm'])->name('post-ad');
+Route::post('/account/post-ad', [AdController::class, 'saveAd'])->name('post-ad');

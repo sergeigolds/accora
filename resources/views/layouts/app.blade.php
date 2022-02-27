@@ -42,11 +42,6 @@
                             Single
                         </a>
                     <li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('test') }}">
-                            Test
-                        </a>
-                    <li>
                 </ul>
                 @auth
                     <div class="post-btn">
@@ -236,6 +231,7 @@
 <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/summernote.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>
