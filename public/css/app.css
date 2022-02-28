@@ -18,7 +18,7 @@
 
 textarea::placeholder,
 input::placeholder {
-    color: #ccc!important;
+    color: #ccc !important;
 }
 
 input#image_src {
@@ -32,4 +32,47 @@ input#image_src {
 
 footer p {
     font-size: 16px;
+}
+
+.dashboard-wrapper td.photo {
+    margin-top: -1px;
+}
+
+
+.dashboard-wrapper td[data-title='Title'] {
+    min-width: 152px;
+}
+
+button.btn-delete {
+    cursor: pointer;
+    border: none;
+}
+
+.section-padding {
+    padding-top: 100px;
+}
+
+.navbar {
+    box-shadow: 0 3px 6px 3px rgb(0 0 0 / 6%);
+}
+
+.account-btn a {
+    background-color: #fff;
+    border: 1px solid #e91e63;
+    color: #e91e63;
+}
+
+.account-btn:hover a {
+    /*background: #e91e63;*/
+    color: #e91e63;
+}
+
+
+.uploaded-image {
+    width: 200px;
+}
+
+.alert-success  {
+    padding: 10px;
+    margin-bottom: 15px;
 }

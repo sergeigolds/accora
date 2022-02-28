@@ -16,6 +16,14 @@ class AdController extends Controller
         ]);
     }
 
+    public function single(Ad $ad)
+    {
+        return view('ads.single', [
+            'ad' => $ad
+        ]);
+    }
+
+
     public function showAdForm()
     {
         $adsCategory = [
@@ -45,7 +53,7 @@ class AdController extends Controller
 
         $imageName = time() . '.' . $request->image_src->extension();
         $request->image_src->move(storage_path('app/public/images'), $imageName);
-        $imagePath = 'storage/images/' . $imageName;
+        $imagePath = '/storage/images/' . $imageName;
 
         $ad = array_merge(
             $request->only('title', 'description', 'price', 'category'),
@@ -57,8 +65,38 @@ class AdController extends Controller
         return back()->with('success', 'Ad successfully added');
     }
 
-    public function single()
+    public function deleteAd(Ad $ad)
     {
-        return view('ads.single');
+        $this->authorize('delete', $ad);
+        $ad->delete();
+
+        return back();
     }
+
+    public function showEditForm(Ad $ad)
+    {
+        $adsCategory = [
+            'Cars',
+            'Cloths',
+            'Electronics',
+            'Toys',
+            'Bicycles',
+            'Furniture',
+            'Pets'
+        ];
+
+        return view('account.post-ad', [
+            'ad' => $ad,
+            'ads_category' => $adsCategory
+        ]);
+    }
+
+    public function editAd(Ad $ad, Request $request)
+    {
+        $ad->update($request->only('title', 'description', 'price', 'category'));
+
+        return back()->with('success', 'Ad successfully updated');
+    }
+
+
 }

@@ -115,12 +115,15 @@
                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <div class="featured-box">
                                                     <figure>
-                                                        <a href="#"><img class="img-fluid"
-                                                                         src="{{ $ad->image_src  }}"
-                                                                         alt=""/></a>
+                                                        <a href="{{ route('single', $ad)}}">
+                                                            <img class="img-fluid"
+                                                                 src="{{ $ad->image_src  }}"
+                                                                 alt=""/>
+                                                        </a>
                                                     </figure>
                                                     <div class="feature-content">
-                                                        <h4><a href="ads-details.html">{{ $ad->title  }}</a></h4>
+                                                        <h4><a href="{{ route('single', $ad)}}">{{ $ad->title  }}</a>
+                                                        </h4>
                                                         <div class="meta-tag">
                                                             <span>
                                                               <a href="#">by John Smith</a>
@@ -131,7 +134,7 @@
                                                         <p class="dsc">{{ Str::limit($ad->description, 150, $end='...') }}</p>
                                                         <div class="listing-bottom">
                                                             <h3 class="price float-left">${{ $ad->price  }}</h3>
-                                                            <a href="ads-details.html"
+                                                            <a href="{{ route('single', $ad)}}"
                                                                class="btn btn-common float-right">View
                                                                 Details</a>
                                                         </div>

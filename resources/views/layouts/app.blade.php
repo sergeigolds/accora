@@ -28,29 +28,24 @@
             </div>
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="navbar-nav mr-auto w-100 justify-content-center">
-                    <li class="nav-item active">
+                    <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('home') }}">
                             Home
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ (request()->is('ads')) ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('ads') }}">
                             Advertisments
                         </a>
                     <li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('single') }}">
-                            Single
-                        </a>
-                    <li>
                 </ul>
                 @auth
-                    <div class="post-btn">
+                    <div class="post-btn" style="margin-right: 15px;">
                         <a class="btn btn-common" href="{{ route('post-ad') }}"><i class="lni-pencil-alt"></i> Post an
                             Ad</a>
                     </div>
-                    <div class="post-btn">
-                        <a class="btn btn-common" href="{{ route('account') }}"><i class="lni-pencil-alt"></i> My
+                    <div class="post-btn account-btn">
+                        <a class="btn btn-common" href="{{ route('account') }}"><i class="lni-user"></i> My
                             Account</a>
                     </div>
                 @endauth
