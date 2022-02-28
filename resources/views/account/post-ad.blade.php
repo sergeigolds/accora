@@ -113,6 +113,7 @@
                                                 id="description"
                                                 name="description"
                                                 placeholder="Description"
+                                                rows="6"
                                                 type="text">@if (old('description') != null){{ old('description')  }}@endif</textarea>
                                             @error('description')
                                             <div class="error-message">
@@ -153,15 +154,15 @@
                                             </div>
                                             @enderror
                                         </div>
-                                        <label class="tg-fileuploadlabel" for="image_name">
+                                        <label class="tg-fileuploadlabel" for="image_src">
                                             <span>Add image to your ad</span>
                                             <span class="btn btn-common upload-file-btn">Select Files</span>
                                             <input
-                                                class="form-control input-md @error('image_name') not-validated @enderror"
-                                                id="image_name" name="image_name"
+                                                class="form-control input-md @error('image_src') not-validated @enderror"
+                                                id="image_src" name="image_src"
                                                 placeholder="Image src"
                                                 type="file"/>
-                                            @error('image_name')
+                                            @error('image_src')
                                             <div class="error-message">
                                                 {{ $message }}
                                             </div>

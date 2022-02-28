@@ -21,11 +21,15 @@ input::placeholder {
     color: #ccc!important;
 }
 
-input#image_name {
+input#image_src {
     display: none;
 }
 
 
 .login-error {
     margin-bottom: 15px;
+}
+
+footer p {
+    font-size: 16px;
 }

@@ -9,7 +9,7 @@ class AdController extends Controller
 {
     public function index()
     {
-        $ads = Ad::latest()->with(['user'])->paginate(15);
+        $ads = Ad::latest()->with(['user'])->paginate(4);
 
         return view('ads.index', [
             'ads' => $ads
@@ -40,15 +40,16 @@ class AdController extends Controller
             'description' => 'required',
             'price' => 'required',
             'category' => 'required',
-            'image_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
+            'image_src' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
         ]);
 
-        $imageName = time() . '.' . $request->image_name->extension();
-        $request->image_name->move(storage_path('app/images'), $imageName);
+        $imageName = time() . '.' . $request->image_src->extension();
+        $request->image_src->move(storage_path('app/public/images'), $imageName);
+        $imagePath = 'storage/images/' . $imageName;
 
         $ad = array_merge(
             $request->only('title', 'description', 'price', 'category'),
-            ['image_name' => $imageName]
+            ['image_src' => $imagePath]
         );
 
         $request->user()->ads()->create($ad);

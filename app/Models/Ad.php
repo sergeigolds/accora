@@ -14,7 +14,7 @@ class Ad extends Model
         'description',
         'price',
         'category',
-        'image_name'
+        'image_src'
     ];
 
     public function user()

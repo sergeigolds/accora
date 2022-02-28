@@ -20,7 +20,7 @@ class CreateAdsTable extends Migration
             $table->text('description');
             $table->float('price', 8, 2);
             $table->text('category');
-            $table->text('image_name');
+            $table->text('image_src');
             $table->timestamps();
         });
     }
