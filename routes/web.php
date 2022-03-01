@@ -13,6 +13,7 @@ Route::get('/', function () {
 
 Route::get('/ads', [AdController::class, 'index'])->name('ads');
 Route::get('/ads/{ad}', [AdController::class, 'single'])->name('single');
+Route::get('/ads/cat/{category}', [AdController::class, 'filterByCategory']);
 
 // Auth
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');

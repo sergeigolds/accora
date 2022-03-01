@@ -24,7 +24,7 @@
                     <span class="lni-menu"></span>
                     <span class="lni-menu"></span>
                 </button>
-                <a href="index-2.html" class="navbar-brand"><img src="assets/img/logo.png" alt=""></a>
+                <a href="/" class="navbar-brand"><img src="{{ asset('images/logo.png') }}" alt=""></a>
             </div>
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="navbar-nav mr-auto w-100 justify-content-center">
@@ -40,21 +40,29 @@
                     <li>
                 </ul>
                 @auth
-                    <div class="post-btn" style="margin-right: 15px;">
+                    <div class="post-btn account-btn {{ (request()->is('account/post-ad')) ? 'active' : '' }}">
                         <a class="btn btn-common" href="{{ route('post-ad') }}"><i class="lni-pencil-alt"></i> Post an
                             Ad</a>
                     </div>
+                    <div class="post-btn account-btn {{ (request()->is('account')) ? 'active' : '' }}"
+                         style="margin-right: 15px; margin-left: 15px">
+                        <a class="btn btn-common" href="{{ route('account') }}"><i class="lni-user"></i> My Account</a>
+                    </div>
                     <div class="post-btn account-btn">
-                        <a class="btn btn-common" href="{{ route('account') }}"><i class="lni-user"></i> My
-                            Account</a>
+                        <form action="{{ route('logout') }}" method="post" id="logout">
+                            @csrf
+                            <a onclick="$('#logout').submit()" class="btn btn-common"><i
+                                    class="lni-enter"></i> Logout</a>
+                        </form>
                     </div>
                 @endauth
 
                 @guest
-                    <div class="post-btn">
+                    <div class="post-btn account-btn {{ (request()->is('login')) ? 'active' : '' }}"
+                         style="margin-right: 15px">
                         <a class="btn btn-common" href="{{ route('login') }}"><i class="lni-pencil-alt"></i> Log In</a>
                     </div>
-                    <div class="post-btn">
+                    <div class="post-btn account-btn {{ (request()->is('register')) ? 'active' : '' }}">
                         <a class="btn btn-common" href="{{ route('register') }}"><i class="lni-pencil-alt"></i> Register</a>
                     </div>
                 @endguest

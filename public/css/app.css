@@ -25,7 +25,6 @@ input#image_src {
     display: none;
 }
 
-
 .login-error {
     margin-bottom: 15px;
 }
@@ -38,10 +37,6 @@ footer p {
     margin-top: -1px;
 }
 
-
-.dashboard-wrapper td[data-title='Title'] {
-    min-width: 152px;
-}
 
 button.btn-delete {
     cursor: pointer;
@@ -72,7 +67,26 @@ button.btn-delete {
     width: 200px;
 }
 
-.alert-success  {
+.alert-success {
     padding: 10px;
     margin-bottom: 15px;
+}
+
+a:not([href]):not([tabindex]):hover,
+a:not([href]):not([tabindex]) {
+    color: #e91e63;
+}
+
+
+.post-btn.active a {
+    background-color: #e91e63;
+    color: #fff;
+}
+
+.navbar-brand img {
+    width: 150px;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    color: #333;
 }

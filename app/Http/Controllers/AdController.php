@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Ad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdController extends Controller
 {
     public function index()
     {
-        $ads = Ad::latest()->with(['user'])->paginate(4);
+        $ads = Ad::latest()->active()->with(['user'])->paginate(4);
+
+        $categories = DB::table('ads')
+            ->whereDate('created_at', '>', now()->subMonths(3))
+            ->distinct('category')
+            ->pluck('category');
 
         return view('ads.index', [
-            'ads' => $ads
+            'ads' => $ads,
+            'categories' => $categories
         ]);
     }
 
@@ -23,6 +30,20 @@ class AdController extends Controller
         ]);
     }
 
+    public function filterByCategory($category)
+    {
+        $ads = Ad::latest()->active()->with(['user'])->where('category', $category)->paginate(4);
+
+        $categories = DB::table('ads')
+            ->whereDate('created_at', '>', now()->subMonths(3))
+            ->distinct('category')
+            ->pluck('category');
+
+        return view('ads.index', [
+            'ads' => $ads,
+            'categories' => $categories
+        ]);
+    }
 
     public function showAdForm()
     {
@@ -36,6 +57,24 @@ class AdController extends Controller
             'Pets'
         ];
         return view('account.post-ad', [
+            'ads_category' => $adsCategory
+        ]);
+    }
+
+    public function showEditForm(Ad $ad)
+    {
+        $adsCategory = [
+            'Cars',
+            'Cloths',
+            'Electronics',
+            'Toys',
+            'Bicycles',
+            'Furniture',
+            'Pets'
+        ];
+
+        return view('account.post-ad', [
+            'ad' => $ad,
             'ads_category' => $adsCategory
         ]);
     }
@@ -65,37 +104,20 @@ class AdController extends Controller
         return back()->with('success', 'Ad successfully added');
     }
 
+    public function editAd(Ad $ad, Request $request)
+    {
+        $ad->update($request->only('title', 'description', 'price', 'category'));
+
+        return back()->with('success', 'Ad successfully updated');
+    }
+
+
     public function deleteAd(Ad $ad)
     {
         $this->authorize('delete', $ad);
         $ad->delete();
 
         return back();
-    }
-
-    public function showEditForm(Ad $ad)
-    {
-        $adsCategory = [
-            'Cars',
-            'Cloths',
-            'Electronics',
-            'Toys',
-            'Bicycles',
-            'Furniture',
-            'Pets'
-        ];
-
-        return view('account.post-ad', [
-            'ad' => $ad,
-            'ads_category' => $adsCategory
-        ]);
-    }
-
-    public function editAd(Ad $ad, Request $request)
-    {
-        $ad->update($request->only('title', 'description', 'price', 'category'));
-
-        return back()->with('success', 'Ad successfully updated');
     }
 
 

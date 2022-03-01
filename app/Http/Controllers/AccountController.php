@@ -11,10 +11,10 @@ class AccountController extends Controller
 {
     public function index(User $user)
     {
-        $ads = Ad::where('user_id', Auth::user()->id)->paginate(5);
+        $ads = Ad::latest()->where('user_id', Auth::user()->id)->paginate(5);
 
         return view('account.index', [
-            'ads' => $ads
+            'ads' => $ads,
         ]);
     }
 

@@ -18,7 +18,8 @@
                                         <th>Photo</th>
                                         <th>Title</th>
                                         <th>Category</th>
-                                        <th>Ad Status</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
                                         <th>Price</th>
                                         <th>Action</th>
                                     </tr>
@@ -34,12 +35,19 @@
                                                          alt=""/>
                                                 </td>
                                                 <td data-title="Title">
-                                                    <h3>{{ $ad->title }}</h3>
-                                                </td>
+                                                    <h3>{{ $ad->title }}</h3></td>
                                                 <td data-title="Category"><span
-                                                        class="adcategories">Laptops & PCs</span></td>
-                                                <td data-title="Ad Status"><span
-                                                        class="adstatus adstatusactive">active</span>
+                                                        class="adcategories">{{ ucfirst($ad->category) }}</span>
+                                                </td>
+                                                <td data-title="Date">
+                                                    <h3>{{ $ad->created_at->diffForHumans() }}</h3>
+                                                </td>
+                                                <td data-title="Ad Status">
+                                                    @if($ad->isExpired())
+                                                        <span class="adstatus adstatusexpired">Expired</span>
+                                                    @else
+                                                        <span class="adstatus adstatusactive">Active</span>
+                                                    @endif
                                                 </td>
                                                 <td data-title="Price">
                                                     <h3>{{ $ad->price }}€</h3>
@@ -50,11 +58,15 @@
                                                            target="_blank"><i
                                                                 class="lni-eye"></i>
                                                         </a>
-                                                        <a class="btn-action btn-edit" href="{{ route('edit-ad', $ad)}}"><i
-                                                                class="lni-pencil"></i>
-                                                        </a>
+                                                        @if(!$ad->isExpired())
+                                                            <a class="btn-action btn-edit"
+                                                               href="{{ route('edit-ad', $ad)}}"><i
+                                                                    class="lni-pencil"></i>
+                                                            </a>
+                                                        @endif
                                                         @can('delete', $ad)
-                                                            <form action="{{ route('delete-ad', $ad) }}" method="post" name="delete_ad">
+                                                            <form action="{{ route('delete-ad', $ad) }}" method="post"
+                                                                  name="delete_ad">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button class="btn-action btn-delete"><i
@@ -67,33 +79,6 @@
                                             </tr>
                                         @endforeach
                                     @endif
-                                    <tr data-category="expired">
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="adnine"/>
-                                                <label class="custom-control-label" for="adnine"></label>
-                                            </div>
-                                        </td>
-                                        <td class="photo"><img class="img-fluid" src="assets/img/product/img9.jpg"
-                                                               alt=""/></td>
-                                        <td data-title="Title">
-                                            <h3>Samsung Galaxy G550T On5 GSM Unlocked Smartphone</h3>
-                                            <span>Ad ID: ng3D5hAMHPajQrM</span>
-                                        </td>
-                                        <td data-title="Category">Mobile</td>
-                                        <td data-title="Ad Status"><span class="adstatus adstatusexpired">Expired</span>
-                                        </td>
-                                        <td data-title="Price">
-                                            <h3>$129</h3>
-                                        </td>
-                                        <td data-title="Action">
-                                            <div class="btns-actions">
-                                                <a class="btn-action btn-view" href="#"><i class="lni-eye"></i></a>
-                                                <a class="btn-action btn-edit" href="#"><i class="lni-pencil"></i></a>
-                                                <a class="btn-action btn-delete" href="#"><i class="lni-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
                                     </tbody>
                                 </table>
                                 {{ $ads->links() }}

@@ -31,10 +31,10 @@
                             <span>Profile Settings</span>
                         </a>
                     </li>
-                    <form action="{{ route('logout') }}" method="post" name="logout">
+                    <form action="{{ route('logout') }}" method="post" id="logout">
                         @csrf
                         <li>
-                            <a onclick="logout.submit()" style="cursor:pointer;">
+                            <a onclick="$('#logout').submit()" style="cursor:pointer;">
                                 <i class="lni-enter"></i>
                                 <span>Logout</span>
                             </a>
