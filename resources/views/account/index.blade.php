@@ -10,6 +10,11 @@
                         <div class="inner-box">
                             <div class="dashboard-box">
                                 <h2 class="dashbord-title">Dashboard</h2>
+                                @if (session('success'))
+                                    <div class="alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="dashboard-wrapper">
                                 <table class="table table-responsive dashboardtable tablemyads">

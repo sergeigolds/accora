@@ -13,85 +13,91 @@
                                     <div class="dashboard-box">
                                         <h2 class="dashbord-title">Edit Profile</h2>
                                     </div>
+                                    @if (session('success'))
+                                        <div class="alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
                                     <div class="dashboard-wrapper">
-                                        <div class="form-group mb-3">
-                                            <strong>I’m a:</strong>
-                                            <div class="tg-selectgroup">
-                          <span class="tg-radio">
-                            <input id="tg-sameuser" type="radio" name="usertype" value="same user" checked=""/>
-                            <label for="tg-sameuser">Same User</label>
-                          </span>
-                                                <span class="tg-radio">
-                            <input id="tg-someoneelse" type="radio" name="usertype" value="someone else"/>
-                            <label for="tg-someoneelse">Someone Else</label>
-                          </span>
+                                        <form action="{{route('profile-settings') }}" method="post" novalidate
+                                              enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-group mb-3">
+                                                <label class="control-label">Full Name</label>
+                                                <input
+                                                    class="form-control input-md @error('name') not-validated @enderror"
+                                                    name="name" type="text"
+                                                    value="{{ auth()->user()->name }}"/>
+                                                @error('name')
+                                                <div class="error-message">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="control-label">First Name*</label>
-                                            <input class="form-control input-md" name="name" type="text"/>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="control-label">Last Name*</label>
-                                            <input class="form-control input-md" name="name" type="text"/>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="control-label">Phone*</label>
-                                            <input class="form-control input-md" name="phone" type="text"/>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="control-label">Enter Address</label>
-                                            <input class="form-control input-md" name="address" type="text"/>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="control-label">Enter Address</label>
-                                            <input class="form-control input-md" name="address" type="text"/>
-                                        </div>
-                                        <div class="form-group mb-3 tg-inputwithicon">
-                                            <label class="control-label">Country</label>
-                                            <div class="tg-select form-control">
-                                                <select>
-                                                    <option value="none">Select Country</option>
-                                                    <option value="none">New York</option>
-                                                    <option value="none">California</option>
-                                                    <option value="none">Washington</option>
-                                                    <option value="none">Birmingham</option>
-                                                    <option value="none">Chicago</option>
-                                                    <option value="none">Phoenix</option>
-                                                </select>
+                                            <div class="form-group mb-3">
+                                                <label class="control-label">Email Address</label>
+                                                <input
+                                                    class="form-control input-md @error('email') not-validated @enderror"
+                                                    name="email" type="email"
+                                                    value="{{ auth()->user()->email }}"/>
+                                                @error('email')
+                                                <div class="error-message">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
-                                        </div>
-                                        <div class="form-group mb-3 tg-inputwithicon">
-                                            <label class="control-label">State</label>
-                                            <div class="tg-select form-control">
-                                                <select>
-                                                    <option value="none">Select State</option>
-                                                    <option value="none">Select State</option>
-                                                    <option value="none">Select State</option>
-                                                </select>
+                                            <div class=" form-group mb-3">
+                                                <label class="control-label">Phone</label>
+                                                <input
+                                                    class="form-control input-md @error('phone') not-validated @enderror"
+                                                    name="phone" type="tel"
+                                                    value="{{ auth()->user()->phone }}"/>
+                                                @error('phone')
+                                                <div class="error-message">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
-                                        </div>
-                                        <div class="form-group mb-3 tg-inputwithicon">
-                                            <label class="control-label">City</label>
-                                            <div class="tg-select form-control">
-                                                <select>
-                                                    <option value="none">Select State</option>
-                                                    <option value="none">Select State</option>
-                                                    <option value="none">Select State</option>
-                                                </select>
+                                            <div class=" form-group mb-3">
+                                                <label class="control-label">New Pasword</label>
+                                                <input
+                                                    class="form-control input-md @error('password') not-validated @enderror"
+                                                    name="password" type="password"
+                                                />
+                                                @error('password')
+                                                <div class="error-message">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
-                                        </div>
-                                        <div class="tg-checkbox">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input"
-                                                       id="tg-agreetermsandrules"/>
-                                                <label class="custom-control-label" for="tg-agreetermsandrules"
-                                                >I agree to all <a href="javascript:void(0);">Terms of Use &amp; Posting
-                                                        Rules</a></label
-                                                >
+                                            <div class=" form-group mb-3">
+                                                <label class="control-label">Retype Pasword</label>
+                                                <input
+                                                    class="form-control input-md @error('password_confirmation') not-validated @enderror"
+                                                    name="password_confirmation" type="password"
+                                                />
+                                                @error('password_confirmation')
+                                                <div class="error-message">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
-                                        </div>
-                                        <button class="btn btn-common" type="button">Post Ad</button>
+                                            {{--                                            <div class="form-group">--}}
+                                            {{--                                                <div class="input-icon">--}}
+                                            {{--                                                    <i class="lni-lock"></i>--}}
+                                            {{--                                                    <input type="password" name="password_confirmation" id="password_confirmation"--}}
+                                            {{--                                                           class="form-control @error('password_confirmation') not-validated @enderror"--}}
+                                            {{--                                                           placeholder="Retype Password"/>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                                @error('password_confirmation')--}}
+                                            {{--                                                <div class="error-message">--}}
+                                            {{--                                                    {{ $message }}--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                                @enderror--}}
+                                            {{--                                            </div>--}}
+                                            <button class=" btn btn-common" type="submit">Save</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

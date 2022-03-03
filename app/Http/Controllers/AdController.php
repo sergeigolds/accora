@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class AdController extends Controller
 {
@@ -106,9 +107,35 @@ class AdController extends Controller
 
     public function editAd(Ad $ad, Request $request)
     {
-        $ad->update($request->only('title', 'description', 'price', 'category'));
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'category' => 'required',
+        ]);
 
-        return back()->with('success', 'Ad successfully updated');
+        if (request()->allFiles()) {
+            $this->validate($request, [
+                'image_src' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
+            ]);
+
+            $path = storage_path('/app/public/images/' . basename($ad->image_src));
+            File::delete($path);
+
+            $imageName = time() . '.' . $request->image_src->extension();
+            $request->image_src->move(storage_path('app/public/images'), $imageName);
+            $imagePath = '/storage/images/' . $imageName;
+
+            $query = array_merge(
+                $request->only('title', 'description', 'price', 'category'),
+                ['image_src' => $imagePath]
+            );
+            $ad->update($query);
+        } else {
+            $ad->update($request->only('title', 'description', 'price', 'category'));
+        }
+
+        return redirect()->route('account')->with('success', 'Ad successfully updated');
     }
 
 

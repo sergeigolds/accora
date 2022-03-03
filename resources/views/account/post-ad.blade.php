@@ -19,11 +19,6 @@
                                         <h2 class="dashbord-title">Ad Detail</h2>
                                     </div>
                                     <div class="dashboard-wrapper">
-                                        @if (session('success'))
-                                            <div class="alert-success">
-                                                {{ session('success') }}
-                                            </div>
-                                        @endif
                                         <div class="form-group mb-3">
                                             <label class="control-label">Title</label>
                                             <input class="form-control input-md @error('title') not-validated @enderror"
@@ -117,25 +112,27 @@
                                         </div>
 
                                         @if(isset($ad))
-                                            <div>Current ad image</div>
-                                            <input type="text" name="image_src" value="{{ $ad->image_src  }}">
-                                            <img class="uploaded-image" src="{{ $ad->image_src  }}" alt="">
-                                        @else
-                                            <label class="tg-fileuploadlabel" for="image_src">
-                                                <span>{{ isset($ad) ? 'Change image of your ad' : 'Add image to your ad' }}</span>
-                                                <span class="btn btn-common upload-file-btn">Select Image</span>
-                                                <input
-                                                    class="form-control input-md @error('image_src') not-validated @enderror"
-                                                    id="image_src" name="image_src"
-                                                    placeholder="Image src"
-                                                    type="file"/>
-                                                @error('image_src')
-                                                <div class="error-message">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </label>
+                                            <div class="change-image">
+                                                <div>Current ad image</div>
+                                                <img class="uploaded-image" src="{{ $ad->image_src  }}" alt="">
+                                                <a class="btn btn-common change-img-btn">Change image</a>
+                                            </div>
                                         @endif
+                                        <label class="tg-fileuploadlabel {{ isset($ad) ? 'hidden-upload' : '' }}"
+                                               for="image_src">
+                                            <span>{{ isset($ad) ? 'Change image of your ad' : 'Add image to your ad' }}</span>
+                                            <span class="btn btn-common upload-file-btn">Select Image</span>
+                                            <input
+                                                class="form-control input-md @error('image_src') not-validated @enderror"
+                                                id="image_src" name="image_src"
+                                                placeholder="Image src"
+                                                type="file"/>
+                                            @error('image_src')
+                                            <div class="error-message">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
                                         <button class="btn btn-common"
                                                 type="submit"
                                                 style="display: block">{{ isset($ad) ? 'Save Ad' : 'Post Ad' }}</button>
