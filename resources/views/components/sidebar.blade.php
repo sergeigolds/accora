@@ -2,9 +2,6 @@
     <aside>
         <div class="sidebar-box">
             <div class="user">
-                <figure>
-                    <a href="#"><img src="assets/img/author/img1.jpg" alt=""/></a>
-                </figure>
                 <div class="usercontent">
                     <h3>Hello</h3>
                     <h3>{{ auth()->user()->name }}</h3>
@@ -19,14 +16,16 @@
                         </a>
                     </li>
                     <li>
-                        <a class="{{ (request()->is('account/post-ad')) ? 'active' : '' }}" href="{{ route('post-ad') }}">
+                        <a class="{{ (request()->is('account/post-ad')) ? 'active' : '' }}"
+                           href="{{ route('post-ad') }}">
                             <i class="lni-pencil-alt"></i>
                             <span>Post an Ad</span>
                         </a>
                     </li>
                     <li>
 
-                        <a class="{{ (request()->is('account/profile-settings')) ? 'active' : '' }}" href="{{ route('profile-settings') }}">
+                        <a class="{{ (request()->is('account/profile-settings')) ? 'active' : '' }}"
+                           href="{{ route('profile-settings') }}">
                             <i class="lni-cog"></i>
                             <span>Profile Settings</span>
                         </a>

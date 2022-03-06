@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-icon">
-                                    <i class="lni-envelope"></i>
+                                    <i class="lni-phone-handset"></i>
                                     <input type="tel" id="phone"
                                            class="form-control @error('phone') not-validated @enderror" name="phone"
                                            placeholder="Your phone number" value="{{ old('phone') }}"/>

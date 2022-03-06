@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -30,9 +31,18 @@ class AccountController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'phone' => 'nullable|regex:/^[+]?\d+$/|min:6',
         ]);
+
+        if (Hash::check($request->old_password, $user->password)) {
+            $this->validate($request, [
+                'new_password' => 'required|confirmed|min:6|max:50|different:OldPassword',
+                'new_password_confirmation' => 'required',
+            ]);
+
+            $user->password = Hash::make($request->new_password);
+        }
 
         $user->name = request('name');
         $user->email = request('email');

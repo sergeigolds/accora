@@ -71,7 +71,7 @@ button.btn-delete {
 }
 
 .change-image a {
-    color: #fff!important;
+    color: #fff !important;
 }
 
 .alert-success {
@@ -107,3 +107,49 @@ a:not([href]):not([tabindex]) {
     display: none;
 }
 
+.search-bar .form-group-search {
+    width: 50%;
+}
+
+.feature-content {
+    width: 100%;
+}
+
+.product-img .img-fluid {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.details-box  .price {
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    background: #e91e63;
+    padding: 10px 25px;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.details-sidebar .agent-inner .agent-title .agent-details {
+    margin-left: 0;
+    top: 15px;
+}
+
+.details-box {
+    margin-top: 0;
+}
+
+.widget #email,
+.widget #message {
+    margin-top: 25px;
+    width: 100%;
+    padding: 10px;
+}
+
+.widget #email:focus,
+.widget #message:focus {
+    outline: none;
+}

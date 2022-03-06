@@ -42,7 +42,7 @@
                                                 <td data-title="Title">
                                                     <h3>{{ $ad->title }}</h3></td>
                                                 <td data-title="Category"><span
-                                                        class="adcategories">{{ ucfirst($ad->category) }}</span>
+                                                        class="adcategories">{{ $ad->category->title }}</span>
                                                 </td>
                                                 <td data-title="Date">
                                                     <h3>{{ $ad->created_at->diffForHumans() }}</h3>

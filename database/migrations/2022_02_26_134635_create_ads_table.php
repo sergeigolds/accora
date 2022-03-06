@@ -14,12 +14,11 @@ class CreateAdsTable extends Migration
     public function up()
     {
         Schema::create('ads', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('title');
             $table->text('description');
             $table->float('price', 8, 2);
-            $table->text('category');
             $table->text('image_src');
             $table->timestamps();
         });
@@ -30,7 +29,8 @@ class CreateAdsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public
+    function down()
     {
         Schema::dropIfExists('ads');
     }

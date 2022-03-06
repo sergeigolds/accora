@@ -60,12 +60,24 @@
                                                 @enderror
                                             </div>
                                             <div class=" form-group mb-3">
+                                                <label class="control-label">Old Pasword (leave it blank if you don't want to change it)</label>
+                                                <input
+                                                    class="form-control input-md @error('old_password') not-validated @enderror"
+                                                    name="old_password" type="password"
+                                                />
+                                                @error('old_password')
+                                                <div class="error-message">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                            <div class=" form-group mb-3">
                                                 <label class="control-label">New Pasword</label>
                                                 <input
-                                                    class="form-control input-md @error('password') not-validated @enderror"
-                                                    name="password" type="password"
+                                                    class="form-control input-md @error('new_password') not-validated @enderror"
+                                                    name="new_password" type="password"
                                                 />
-                                                @error('password')
+                                                @error('new_password')
                                                 <div class="error-message">
                                                     {{ $message }}
                                                 </div>
@@ -74,10 +86,10 @@
                                             <div class=" form-group mb-3">
                                                 <label class="control-label">Retype Pasword</label>
                                                 <input
-                                                    class="form-control input-md @error('password_confirmation') not-validated @enderror"
-                                                    name="password_confirmation" type="password"
+                                                    class="form-control input-md @error('new_password_confirmation') not-validated @enderror"
+                                                    name="new_password_confirmation" type="password"
                                                 />
-                                                @error('password_confirmation')
+                                                @error('new_password_confirmation')
                                                 <div class="error-message">
                                                     {{ $message }}
                                                 </div>

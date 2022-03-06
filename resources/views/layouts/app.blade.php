@@ -28,13 +28,8 @@
             </div>
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="navbar-nav mr-auto w-100 justify-content-center">
-                    <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('home') }}">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item {{ (request()->is('ads')) ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('ads') }}">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">
                             Advertisments
                         </a>
                     <li>
@@ -68,57 +63,6 @@
                 @endguest
             </div>
         </div>
-
-        <ul class="mobile-menu">
-            <li>
-                <a class="active" href="#">
-                    Home
-                </a>
-                <ul class="dropdown">
-                    <li><a class="active" href="index-2.html">Home 1</a></li>
-                    <li><a href="index-3.html">Home 2</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="category.html">Categories</a>
-            </li>
-            <li>
-                <a href="#">
-                    Listings
-                </a>
-                <ul class="dropdown">
-                    <li><a href="adlistinggrid.html">Ad Grid</a></li>
-                    <li><a href="adlistinglist.html">Ad Listing</a></li>
-                    <li><a href="ads-details.html">Listing Detail</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Pages</a>
-                <ul class="dropdown">
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="ads-details.html">Ads Details</a></li>
-                    <li><a href="post-ads.html">Ads Post</a></li>
-                    <li><a href="pricing.html">Packages</a></li>
-                    <li><a href="testimonial.html">Testimonial</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="404.html">404</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Blog</a>
-                <ul class="dropdown">
-                    <li><a href="blog.html">Blog - Right Sidebar</a></li>
-                    <li><a href="blog-left-sidebar.html">Blog - Left Sidebar</a></li>
-                    <li><a href="blog-grid-full-width.html"> Blog full width </a></li>
-                    <li><a href="single-post.html">Blog Details</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="contact.html">Contact Us</a>
-            </li>
-        </ul>
-
     </nav>
 </header>
 
@@ -146,14 +90,14 @@
 
 <script src="{{ asset('js/jquery-min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/color-switcher.js') }}"></script>
-<script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
-<script src="{{ asset('js/waypoints.min.js') }}"></script>
+{{--<script src="{{ asset('js/color-switcher.js') }}"></script>--}}
+{{--<script src="{{ asset('js/jquery.counterup.min.js') }}"></script>--}}
+{{--<script src="{{ asset('js/waypoints.min.js') }}"></script>--}}
 <script src="{{ asset('js/wow.js') }}"></script>
 <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
-<script src="{{ asset('js/summernote.js') }}"></script>
+{{--<script src="{{ asset('js/summernote.js') }}"></script>--}}
 <script src="{{ asset('js/app.js') }}"></script>
 
 </body>

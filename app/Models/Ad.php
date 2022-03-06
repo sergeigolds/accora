@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,13 +15,18 @@ class Ad extends Model
         'title',
         'description',
         'price',
-        'category',
+        'category_id',
         'image_src'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function isExpired()
@@ -31,4 +38,11 @@ class Ad extends Model
     {
         return $query->whereDate('created_at', '>', now()->subMonths(3));
     }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        return $filter->apply($builder);
+    }
+
+
 }

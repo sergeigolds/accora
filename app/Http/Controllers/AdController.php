@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\AdFilter;
+use App\Mail\ContactForm;
 use App\Models\Ad;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class AdController extends Controller
 {
-    public function index()
+    public function index(AdFilter $request)
     {
-        $ads = Ad::latest()->active()->with(['user'])->paginate(4);
-
-        $categories = DB::table('ads')
-            ->whereDate('created_at', '>', now()->subMonths(3))
-            ->distinct('category')
-            ->pluck('category');
+        $ads = Ad::filter($request)->latest()->active()->with(['user'])->paginate(15);
 
         return view('ads.index', [
             'ads' => $ads,
-            'categories' => $categories
         ]);
     }
 
@@ -31,63 +29,38 @@ class AdController extends Controller
         ]);
     }
 
-    public function filterByCategory($category)
+    public function showCategory($cat_alias)
     {
-        $ads = Ad::latest()->active()->with(['user'])->where('category', $category)->paginate(4);
-
-        $categories = DB::table('ads')
-            ->whereDate('created_at', '>', now()->subMonths(3))
-            ->distinct('category')
-            ->pluck('category');
+        $cat = Category::where('alias', $cat_alias)->first();
+        $ads = Ad::latest()->active()->with(['user'])->where('category_id', $cat->id)->paginate(4);
 
         return view('ads.index', [
             'ads' => $ads,
-            'categories' => $categories
+            'cat' => $cat
         ]);
     }
 
     public function showAdForm()
     {
-        $adsCategory = [
-            'Cars',
-            'Cloths',
-            'Electronics',
-            'Toys',
-            'Bicycles',
-            'Furniture',
-            'Pets'
-        ];
-        return view('account.post-ad', [
-            'ads_category' => $adsCategory
-        ]);
+        return view('account.post-ad');
     }
 
     public function showEditForm(Ad $ad)
     {
-        $adsCategory = [
-            'Cars',
-            'Cloths',
-            'Electronics',
-            'Toys',
-            'Bicycles',
-            'Furniture',
-            'Pets'
-        ];
 
         return view('account.post-ad', [
-            'ad' => $ad,
-            'ads_category' => $adsCategory
+            'ad' => $ad
         ]);
     }
 
-    public function saveAd(Request $request)
+    public function createAd(Request $request)
     {
 
         $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'image_src' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
         ]);
 
@@ -96,13 +69,13 @@ class AdController extends Controller
         $imagePath = '/storage/images/' . $imageName;
 
         $ad = array_merge(
-            $request->only('title', 'description', 'price', 'category'),
+            $request->only('title', 'description', 'price', 'category_id'),
             ['image_src' => $imagePath]
         );
 
         $request->user()->ads()->create($ad);
 
-        return back()->with('success', 'Ad successfully added');
+        return redirect()->route('account')->with('success', 'Ad successfully updated');
     }
 
     public function editAd(Ad $ad, Request $request)
@@ -111,7 +84,7 @@ class AdController extends Controller
             'title' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
         ]);
 
         if (request()->allFiles()) {
@@ -127,12 +100,12 @@ class AdController extends Controller
             $imagePath = '/storage/images/' . $imageName;
 
             $query = array_merge(
-                $request->only('title', 'description', 'price', 'category'),
+                $request->only('title', 'description', 'price', 'category_id'),
                 ['image_src' => $imagePath]
             );
             $ad->update($query);
         } else {
-            $ad->update($request->only('title', 'description', 'price', 'category'));
+            $ad->update($request->only('title', 'description', 'price', 'category_id'));
         }
 
         return redirect()->route('account')->with('success', 'Ad successfully updated');
@@ -147,5 +120,22 @@ class AdController extends Controller
         return back();
     }
 
+    public function sendEmail(Request $request)
+    {
 
+        $user =  User::find($request->user_id);
+
+        $this->validate($request, [
+            'email' => 'required|email',
+            'message' => 'required'
+        ]);
+
+        $data = array(
+            'email' => $request->email,
+            'message' => $request->message
+        );
+
+        Mail::to($user)->send(new ContactForm($data));
+        return back()->with('success', 'Message successfully sent');
+    }
 }

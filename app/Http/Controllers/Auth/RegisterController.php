@@ -18,9 +18,8 @@ class RegisterController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|max:255',
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:50',
             'password' => 'required|confirmed',
         ]);
 
@@ -33,6 +32,6 @@ class RegisterController extends Controller
 
         auth()->attempt($request->only('email', 'password'));
 
-        return redirect()->route('home');
+        return redirect('/');
     }
 }

@@ -86,25 +86,22 @@
                                         <div class="form-group mb-3 tg-inputwithicon">
                                             <label class="control-label">Categories</label>
                                             <div
-                                                class="tg-select form-control @error('category') not-validated @enderror">
-                                                <select name='category' id='category'>
+                                                class="tg-select form-control @error('category_id') not-validated @enderror">
+                                                <select name='category_id' id='category_id'>
                                                     <option value="">Select Category</option>
-                                                    @foreach ($ads_category as $category)
+                                                    @foreach ($categories as $category)
                                                         <option
-                                                            @if(isset($ad))
-                                                            @if(trim($ad->category) == trim(strtolower($category)))
-                                                            value="{{ strtolower($category) }}" selected>{{ $category }}
+                                                            @if(isset($ad) && $ad->category_id == $category->id)
+                                                            value="{{ $category->id }}"
+                                                            selected>{{ $category->title }}
                                                             @else
-                                                                value="{{ strtolower($category) }}">{{ $category }}
-                                                            @endif
-                                                            @else
-                                                                value="{{ strtolower($category) }}">{{ $category }}
+                                                                value="{{ $category->id }}">{{ $category->title }}
                                                             @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            @error('category')
+                                            @error('category_id')
                                             <div class="error-message">
                                                 {{ $message }}
                                             </div>

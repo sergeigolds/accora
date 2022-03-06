@@ -7,14 +7,13 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
 // Ads pages
-Route::get('/ads', [AdController::class, 'index'])->name('ads');
-Route::get('/ads/{ad}', [AdController::class, 'single'])->name('single');
-Route::get('/ads/cat/{category}', [AdController::class, 'filterByCategory']);
+Route::get('/', [AdController::class, 'index'])->name('ads');
+Route::get('/ad/{ad}', [AdController::class, 'single'])->name('single');
+Route::get('/category/{cat}', [AdController::class, 'showCategory'])->name('showCategory');
+
+// Email
+Route::post('/send-email', [AdController::class, 'sendEmail'])->name('sendEmail');
 
 // Authentication
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -32,7 +31,7 @@ Route::get('/account/profile-settings', [AccountController::class, 'ProfileSetti
 Route::put('/account/profile-settings', [AccountController::class, 'editProfileSettings']);
 
 Route::get('/account/post-ad', [AdController::class, 'showAdForm'])->name('post-ad')->middleware('auth')->middleware('auth');
-Route::post('/account/post-ad', [AdController::class, 'saveAd'])->name('post-ad');
+Route::post('/account/post-ad', [AdController::class, 'createAd'])->name('post-ad');
 
 Route::get('/account/edit-ad/{ad}', [AdController::class, 'showEditForm'])->name('edit-ad')->middleware('auth');
 Route::put('/account/edit-ad/{ad}', [AdController::class, 'editAd']);

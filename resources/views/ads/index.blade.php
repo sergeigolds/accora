@@ -1,49 +1,83 @@
 @extends('layouts.app')
 
 @section('content')
+    <div id="hero-area">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-9 col-xs-12 text-center">
+                    <div class="contents">
+                        <h1 class="head-title">Welcome to The Largest <span class="year">Marketplace</span></h1>
+                        <p>Buy and sell everything from used cars to mobile phones and computers, or search for
+                            property, jobs and more</p>
+                        <div class="search-bar">
+                            <div class="search-inner">
+                                <form class="search-form" method="get" action="{{route('ads')}}">
+                                    <div class="form-group form-group-search">
+                                        <input type="text" name="search_field" class="form-control"
+                                               placeholder="What are you looking for?">
+                                    </div>
+                                    <div class="form-group inputwithicon">
+                                        <div class="select">
+                                            <select name="category_id">
+                                                <option value="">Select Category</option>
+                                                @foreach ($categories as $category)
+                                                    <option
+                                                        value="{{ $category->id }}">{{ $category->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <i class="lni-menu"></i>
+                                    </div>
+                                    <button class="btn btn-common" type="submit"><i class="lni-search"></i> Search Now
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="categories">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12 col-xs-12">
+                    <div id="categories-icon-slider" class="categories-wrapper owl-carousel owl-theme">
+                        @foreach($categories as $category)
+                            <div class="item">
+                                <a href="{{ route('showCategory', $category->alias) }}">
+                                    <div class="category-icon-item">
+                                        <div class="icon-box">
+                                            <div class="icon">
+                                                <img src="assets/img/category/img-1.png" alt=""/>
+                                            </div>
+                                            <h4>{{ $category->title  }}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="main-container section-padding">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-12 col-xs-12 page-sidebar">
-                    <aside>
-                        <div class="widget_search">
-                            <form role="search" id="search-form">
-                                <input
-                                    type="search"
-                                    class="form-control"
-                                    autocomplete="off"
-                                    name="s"
-                                    placeholder="Search..."
-                                    id="search-input"
-                                    value=""
-                                />
-                                <button type="submit" id="search-submit" class="search-btn"><i class="lni-search"></i>
-                                </button>
-                            </form>
-                        </div>
-
-                        <div class="widget categories">
-                            <h4 class="widget-title">All Categories</h4>
-                            <ul class="categories-list">
-                                @foreach($categories as $category)
-                                    <li>
-                                        <a href="/ads/cat/{{$category}}">
-                                            {{ucfirst($category)}}<span class="category-counter">(5)</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </aside>
-                </div>
-                <div class="col-lg-9 col-md-12 col-xs-12 page-content">
+                <div class="col-lg-12 col-md-12 col-xs-12 page-content">
                     <div class="adds-wrapper">
                         <div class="tab-content">
                             <div id="grid-view" class="tab-pane fade active show">
                                 <div class="row">
                                     @if ($ads->count())
                                         @foreach ($ads as $ad)
-                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
                                                 <div class="featured-box">
                                                     <figure>
                                                         <a href="{{ route('single', $ad)}}">
@@ -57,12 +91,9 @@
                                                         </h4>
                                                         <div class="meta-tag">
                                                             <span>
-                                                              <a href="#">by John Smith</a>
-                                                            </span> <span>
-                                                              <a href="#">in {{ $ad->category  }}</a>
+                                                              <a href="#">Category: {{ $ad->category->title  }}</a>
                                                             </span>
                                                         </div>
-                                                        <p class="dsc">{{ Str::limit($ad->description, 150, $end='...') }}</p>
                                                         <div class="listing-bottom">
                                                             <h3 class="price float-left">${{ $ad->price  }}</h3>
                                                             <a href="{{ route('single', $ad)}}"
