@@ -25,10 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = Category::orderBy('id')->get();
 
-        View::share([
-            'categories' => $categories
-        ]);
+        if (!Category::orderBy('id')->get()->isEmpty()) {
+            $categories = Category::orderBy('id')->get();
+
+            View::share([
+                'categories' => $categories
+            ]);
+        }
     }
 }

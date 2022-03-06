@@ -89,16 +89,18 @@
                                                 class="tg-select form-control @error('category_id') not-validated @enderror">
                                                 <select name='category_id' id='category_id'>
                                                     <option value="">Select Category</option>
-                                                    @foreach ($categories as $category)
-                                                        <option
-                                                            @if(isset($ad) && $ad->category_id == $category->id)
-                                                            value="{{ $category->id }}"
-                                                            selected>{{ $category->title }}
-                                                            @else
-                                                                value="{{ $category->id }}">{{ $category->title }}
-                                                            @endif
-                                                        </option>
-                                                    @endforeach
+                                                    @if (isset($categories))
+                                                        @foreach ($categories as $category)
+                                                            <option
+                                                                @if(isset($ad) && $ad->category_id == $category->id)
+                                                                value="{{ $category->id }}"
+                                                                selected>{{ $category->title }}
+                                                                @else
+                                                                    value="{{ $category->id }}">{{ $category->title }}
+                                                                @endif
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
                                             @error('category_id')
