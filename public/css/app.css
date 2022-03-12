@@ -153,3 +153,8 @@ a:not([href]):not([tabindex]) {
 .widget #message:focus {
     outline: none;
 }
+
+.verify-card {
+    margin-top: 125px;
+    margin-bottom: 40px;
+}
