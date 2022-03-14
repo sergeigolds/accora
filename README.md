@@ -5,7 +5,7 @@ How to run app.
 3.Edit database connection details in .env<br />
 4.Run composer install<br />
 5.Run php artisan key:generate<br />
-6.Run php artisan storage:link
+6.Run php artisan storage:link<br />
 7.Run php artisan migrate:fresh --seed<br />
 8.Run php artisan serve<br />
 9.Go to link localhost:8000<br />
