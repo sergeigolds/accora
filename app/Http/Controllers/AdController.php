@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Filters\AdFilter;
+use App\Http\Requests\AdRequest;
 use App\Mail\ContactForm;
 use App\Models\Ad;
 use App\Models\Category;
@@ -15,10 +16,12 @@ class AdController extends Controller
 {
     public function index(AdFilter $request)
     {
+        $categories = Category::orderBy('id')->get();
         $ads = Ad::filter($request)->latest()->active()->with(['user'])->paginate(15);
 
         return view('ads.index', [
             'ads' => $ads,
+            'categories' => $categories,
         ]);
     }
 
@@ -29,41 +32,25 @@ class AdController extends Controller
         ]);
     }
 
-    public function showCategory($cat_alias)
-    {
-        $cat = Category::where('alias', $cat_alias)->first();
-        $ads = Ad::latest()->active()->with(['user'])->where('category_id', $cat->id)->paginate(4);
-
-        return view('ads.index', [
-            'ads' => $ads,
-            'cat' => $cat
-        ]);
-    }
-
     public function showAdForm()
     {
-        return view('account.post-ad');
+        $categories = Category::orderBy('id')->get();
+        return view('account.post-ad', [
+            'categories' => $categories,
+        ]);
     }
 
     public function showEditForm(Ad $ad)
     {
-
+        $categories = Category::orderBy('id')->get();
         return view('account.post-ad', [
-            'ad' => $ad
+            'ad' => $ad,
+            'categories' => $categories,
         ]);
     }
 
-    public function createAd(Request $request)
+    public function create(AdRequest $request)
     {
-
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'category_id' => 'required',
-            'image_src' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
-        ]);
-
         $imageName = time() . '.' . $request->image_src->extension();
         $request->image_src->move(storage_path('app/public/images'), $imageName);
         $imagePath = '/storage/images/' . $imageName;
@@ -75,23 +62,12 @@ class AdController extends Controller
 
         $request->user()->ads()->create($ad);
 
-        return redirect()->route('account')->with('success', 'Ad successfully updated');
+        return redirect()->route('account')->with('success', 'Ad successfully created');
     }
 
-    public function editAd(Ad $ad, Request $request)
+    public function edit(Ad $ad, AdRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'category_id' => 'required',
-        ]);
-
-        if (request()->allFiles()) {
-            $this->validate($request, [
-                'image_src' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
-            ]);
-
+        if ($request->image_src) {
             $path = storage_path('/app/public/images/' . basename($ad->image_src));
             File::delete($path);
 
@@ -112,18 +88,21 @@ class AdController extends Controller
     }
 
 
-    public function deleteAd(Ad $ad)
+    public function delete(Ad $ad)
     {
         $this->authorize('delete', $ad);
         $ad->delete();
 
-        return back();
+        $path = storage_path('/app/public/images/' . basename($ad->image_src));
+        File::delete($path);
+
+        return redirect()->route('account')->with('success', 'Ad successfully deleted');
     }
 
     public function sendEmail(Request $request)
     {
 
-        $user =  User::find($request->user_id);
+        $user = User::find($request->user_id);
 
         $this->validate($request, [
             'email' => 'required|email',

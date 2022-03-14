@@ -38,7 +38,7 @@ footer p {
 }
 
 
-button.btn-delete {
+.btn-delete {
     cursor: pointer;
     border: none;
 }
@@ -122,7 +122,7 @@ a:not([href]):not([tabindex]) {
     margin-bottom: 15px;
 }
 
-.details-box  .price {
+.details-box .price {
     position: absolute;
     top: 0px;
     left: 15px;
@@ -157,4 +157,13 @@ a:not([href]):not([tabindex]) {
 .verify-card {
     margin-top: 125px;
     margin-bottom: 40px;
+}
+
+#delete-modal {
+    display: none;
+}
+
+#hero-area {
+    background: url('../images/hero-area.jpg') no-repeat;
+    background-size: cover;
 }

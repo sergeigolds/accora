@@ -24,7 +24,7 @@
                                             <strong><i class="lni-alarm-clock"></i>
                                                 Date:</strong> {{date('d-m-Y', strtotime($ad->created_at))  }}
                                             <strong><i class="lni-folder ml-2"></i> Categories:</strong> <a
-                                                href="{{ route('showCategory', $ad->category->alias) }}">{{ $ad->category->title }}</a>
+                                                href="/?category_id={{$ad->category->id}}">{{ $ad->category->title }}</a>
                                         </p>
                                     </li>
                                 </ul>
@@ -47,13 +47,34 @@
                                     <div class="agent-title">
                                         <div class="agent-details">
                                             <h3>{{ $ad->user->name }}</h3>
-                                            <span><i class="lni-phone-handset"></i>{{ $ad->user->phone }}</span>
+                                            @if($ad->user->phone)
+                                                <span><i class="lni-phone-handset"></i>{{ $ad->user->phone }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <input type="hidden" name="user_id" id='user_id' value="{{ $ad->user->id }}"/>
-                                    <input type="email" name="email" id='email' placeholder="Your email"/>
+                                    @if (auth()->user())
+                                        <input type="hidden" name="email" id='email' value="{{auth()->user()->email}}"/>
+                                    @else
+                                        <input type="email" name="email" id='email'
+                                               class="@error('email') not-validated @enderror"
+                                               value="{{old('email')}}"
+                                               placeholder="Your email"/>
+                                    @endif
+                                    @error('email')
+                                    <div class="error-message">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+
                                     <textarea name="message" id="message" rows="4"
-                                              placeholder="Your message"></textarea>
+                                              class="@error('message') not-validated @enderror"
+                                              placeholder="Your message">{{old('message')}}</textarea>
+                                    @error('message')
+                                    <div class="error-message">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                     <button type="submit" class="btn btn-common fullwidth mt-4">Send Message</button>
                                 </div>
                         </div>

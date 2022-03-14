@@ -9,9 +9,9 @@
                     <form action="{{ isset($ad) ? route('edit-ad', $ad) : route('post-ad') }}" method="post" novalidate
                           enctype="multipart/form-data">
                         @csrf
-                        @if(isset($ad))
+                        @isset($ad)
                             @method('PUT')
-                        @endif
+                        @endisset
                         <div class="row page-content">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="inner-box">
@@ -26,11 +26,7 @@
                                                    name="title"
                                                    placeholder="Title"
                                                    type="text"
-                                                   @if(isset($ad))
-                                                   value="{{ $ad->title }}"
-                                                   @else
-                                                   value="{{ old('title') }}"
-                                                @endif
+                                                   value="{{ isset($ad) ? $ad->title : old('title') }}"
                                             />
                                             @error('title')
                                             <div class="error-message">
@@ -40,23 +36,13 @@
                                         </div>
                                         <div class="form-group mb-3">
                                             <label class="control-label">Description</label>
-                                            @if(isset($ad))
-                                                <textarea
-                                                    class="form-control input-md @error('description') not-validated @enderror"
-                                                    id="description"
-                                                    name="description"
-                                                    placeholder="Description"
-                                                    rows="6"
-                                                    type="text">{{ $ad->description }}</textarea>
-                                            @else
-                                                <textarea
-                                                    class="form-control input-md @error('description') not-validated @enderror"
-                                                    id="description"
-                                                    name="description"
-                                                    placeholder="Description"
-                                                    rows="6"
-                                                    type="text">@if (old('description') != null){{ old('description') }}@endif</textarea>
-                                            @endif
+                                            <textarea
+                                                class="form-control input-md @error('description') not-validated @enderror"
+                                                id="description"
+                                                name="description"
+                                                placeholder="Description"
+                                                rows="6"
+                                                type="text">{{ isset($ad) ? $ad->description : old('description') }}</textarea>
                                             @error('description')
                                             <div class="error-message">
                                                 {{ $message }}
@@ -70,11 +56,7 @@
                                                    id="price" name="price"
                                                    placeholder="Price"
                                                    type="number"
-                                                   @if(isset($ad))
-                                                   value="{{ $ad->price }}"
-                                                   @else
-                                                   value="{{ old('price') }}"
-                                                @endif
+                                                   value="{{ isset($ad) ? $ad->price : old('price') }}"
                                             />
                                             @error('price')
                                             <div class="error-message">
@@ -89,18 +71,15 @@
                                                 class="tg-select form-control @error('category_id') not-validated @enderror">
                                                 <select name='category_id' id='category_id'>
                                                     <option value="">Select Category</option>
-                                                    @if (isset($categories))
-                                                        @foreach ($categories as $category)
-                                                            <option
-                                                                @if(isset($ad) && $ad->category_id == $category->id)
-                                                                value="{{ $category->id }}"
-                                                                selected>{{ $category->title }}
-                                                                @else
-                                                                    value="{{ $category->id }}">{{ $category->title }}
-                                                                @endif
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
+                                                    @foreach ($categories as $category)
+                                                        <option
+                                                            value="{{ $category->id }}"
+                                                            @if(isset($ad) && $ad->category_id == $category->id || old('category_id') == $category->id)
+                                                            selected
+                                                            @endif
+                                                        >{{ $category->title }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             @error('category_id')
@@ -110,13 +89,13 @@
                                             @enderror
                                         </div>
 
-                                        @if(isset($ad))
+                                        @isset($ad)
                                             <div class="change-image">
                                                 <div>Current ad image</div>
                                                 <img class="uploaded-image" src="{{ $ad->image_src  }}" alt="">
                                                 <a class="btn btn-common change-img-btn">Change image</a>
                                             </div>
-                                        @endif
+                                        @endisset
                                         <label class="tg-fileuploadlabel {{ isset($ad) ? 'hidden-upload' : '' }}"
                                                for="image_src">
                                             <span>{{ isset($ad) ? 'Change image of your ad' : 'Add image to your ad' }}</span>
@@ -126,12 +105,12 @@
                                                 id="image_src" name="image_src"
                                                 placeholder="Image src"
                                                 type="file"/>
-                                            @error('image_src')
-                                            <div class="error-message">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
                                         </label>
+                                        @error('image_src')
+                                        <div class="error-message">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                         <button class="btn btn-common"
                                                 type="submit"
                                                 style="display: block">{{ isset($ad) ? 'Save Ad' : 'Post Ad' }}</button>

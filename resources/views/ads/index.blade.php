@@ -21,13 +21,11 @@
                                         <div class="select">
                                             <select name="category_id">
                                                 <option value="">Select Category</option>
-                                                @if (isset($categories))
-                                                    @foreach ($categories as $category)
-                                                        <option
-                                                            value="{{ $category->id }}">{{ $category->title }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
+                                                @foreach ($categories as $category)
+                                                    <option
+                                                        value="{{ $category->id }}">{{ $category->title }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <i class="lni-menu"></i>
@@ -49,22 +47,20 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-md-12 col-xs-12">
                     <div id="categories-icon-slider" class="categories-wrapper owl-carousel owl-theme">
-                        @if (isset($categories))
-                            @foreach($categories as $category)
-                                <div class="item">
-                                    <a href="{{ route('showCategory', $category->alias) }}">
-                                        <div class="category-icon-item">
-                                            <div class="icon-box">
-                                                <div class="icon">
-                                                    <img src="assets/img/category/img-1.png" alt=""/>
-                                                </div>
-                                                <h4>{{ $category->title  }}</h4>
+                        @foreach($categories as $category)
+                            <div class="item">
+                                <a href="/?category_id={{$category->id}}">
+                                    <div class="category-icon-item">
+                                        <div class="icon-box">
+                                            <div class="icon">
+                                                <img src="/images/{{$category->image}}" alt=""/>
                                             </div>
+                                            <h4>{{ $category->title  }}</h4>
                                         </div>
-                                    </a>
-                                </div>
-                            @endforeach
-                        @endif
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -36,7 +36,11 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group mb-3">
-                                                <label class="control-label">Email Address</label>
+                                                <label class="control-label">Email Address
+                                                    @if(auth()->user()->getPendingEmail())
+                                                        <span>(There is a pending change of the email to {{ auth()->user()->getPendingEmail() }})</span>
+                                                    @endif
+                                                </label>
                                                 <input
                                                     class="form-control input-md @error('email') not-validated @enderror"
                                                     name="email" type="email"
@@ -60,7 +64,8 @@
                                                 @enderror
                                             </div>
                                             <div class=" form-group mb-3">
-                                                <label class="control-label">Old Pasword (leave it blank if you don't want to change it)</label>
+                                                <label class="control-label">Old Pasword (leave it blank if you don't
+                                                    want to change it)</label>
                                                 <input
                                                     class="form-control input-md @error('old_password') not-validated @enderror"
                                                     name="old_password" type="password"

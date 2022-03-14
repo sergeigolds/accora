@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\ProfileSettingsRequest;
 use App\Models\Ad;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +12,7 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $ads = Ad::latest()->where('user_id', Auth::user()->id)->paginate(15);
+        $ads = Ad::latest()->where('user_id', Auth::user()->id)->paginate();
 
         return view('account.index', [
             'ads' => $ads,
@@ -24,28 +24,21 @@ class AccountController extends Controller
         return view('account.profile-settings');
     }
 
-    public function editProfileSettings(Request $request)
+    public function edit(ProfileSettingsRequest $request)
     {
 
         $user = Auth::user();
 
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'nullable|regex:/^[+]?\d+$/|min:6',
-        ]);
+        $user->name = request('name');
 
-        if (Hash::check($request->old_password, $user->password)) {
-            $this->validate($request, [
-                'new_password' => 'required|confirmed|min:6|max:50|different:OldPassword',
-                'new_password_confirmation' => 'required',
-            ]);
+        if (auth()->user()->email != $request->email) {
+            auth()->user()->newEmail($request->email);
+        }
 
+        if ($request->new_password) {
             $user->password = Hash::make($request->new_password);
         }
 
-        $user->name = request('name');
-        $user->email = request('email');
         $user->phone = request('phone');
 
         $user->save();

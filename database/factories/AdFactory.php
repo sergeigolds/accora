@@ -11,7 +11,7 @@ class AdFactory extends Factory
     {
         return [
             'title' => $this->faker->text(40),
-            'user_id' => 2,
+            'user_id' => $this->faker->numberBetween(1, $max = 7),
             'category_id' => $this->faker->numberBetween(1, $max = 7),
             'description' => $this->faker->paragraph(50),
             'price' => $this->faker->numberBetween(34, $max = 790),

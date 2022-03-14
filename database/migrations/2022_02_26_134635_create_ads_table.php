@@ -14,13 +14,14 @@ class CreateAdsTable extends Migration
     public function up()
     {
         Schema::create('ads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->id();
             $table->text('title');
             $table->text('description');
             $table->float('price', 8, 2);
             $table->text('image_src');
             $table->timestamps();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
         });
     }
 
